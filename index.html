@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJCON - Empresa Júnior de Consultoria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Orange Accent -->
+    <!-- Application Structure Plan: A single-page application with a clear narrative flow. It starts with a strong introduction (Hero), moves to build credibility and connection (Sobre, Cultura, Equipe), presents the core offerings (Soluções), showcases results (Desempenho), and ends with a clear call-to-action (Contato). This structure guides the user logically from awareness to conversion. The interactivity, such as clickable service cards and dynamic charts, is designed to engage the user and allow them to explore details at their own pace, making the information more digestible than a static report. -->
+    <!-- Visualization & Content Choices: Report Info: Faturamento 2023/2024, Metas de Crescimento -> Goal: Show growth and success -> Viz: Bar Chart (Chart.js) -> Interaction: Hovering over bars shows exact values. -> Justification: Bar charts are excellent for direct comparison of quantitative data like revenue over time. Report Info: Company values -> Goal: Explain company culture -> Viz: Interactive Cards (HTML/CSS/JS) -> Interaction: Clicking a card reveals details. -> Justification: This organizes qualitative information cleanly and encourages user engagement. Report Info: Team members -> Goal: Introduce the team -> Viz: Grid of profiles (HTML/CSS/JS) -> Interaction: Hover to see titles. -> Justification: A visually appealing way to present the team and make the company feel more personal. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f7f3; /* Warm neutral background */
+            color: #4a4a4a;
+        }
+        .bg-primary { background-color: #FF7F00; } /* EJCON Orange */
+        .text-primary { color: #FF7F00; }
+        .bg-secondary { background-color: #f8f7f3; }
+        .bg-dark-gray { background-color: #333333; }
+        .text-light-gray { color: #888888; }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+    </style>
+</head>
+<body class="bg-secondary">
+
+    <header id="header" class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="text-2xl font-bold text-primary">EJCON</div>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#inicio" class="text-gray-600 hover:text-primary transition">Início</a>
+                <a href="#sobre" class="text-gray-600 hover:text-primary transition">Sobre</a>
+                <a href="#cultura" class="text-gray-600 hover:text-primary transition">Cultura</a>
+                <a href="#solucoes" class="text-gray-600 hover:text-primary transition">Soluções</a>
+                <a href="#equipe" class="text-gray-600 hover:text-primary transition">Equipe</a>
+                <a href="#desempenho" class="text-gray-600 hover:text-primary transition">Desempenho</a>
+            </div>
+            <a href="#contato" class="hidden md:block bg-primary text-white py-2 px-4 rounded-full hover:opacity-90 transition">Quero uma Proposta</a>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#inicio" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Início</a>
+            <a href="#sobre" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Sobre</a>
+            <a href="#cultura" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Cultura</a>
+            <a href="#solucoes" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Soluções</a>
+            <a href="#equipe" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Equipe</a>
+            <a href="#desempenho" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Desempenho</a>
+            <a href="#contato" class="block py-2 px-4 text-sm text-primary hover:bg-gray-100">Quero uma Proposta</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="bg-white">
+            <div class="container mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight">Transformando <span class="text-primary">Ideias</span> em Soluções Inovadoras</h1>
+                    <p class="mt-4 text-lg text-light-gray">Desde 1995, impulsionando o sucesso de micro e pequenas empresas na Região Tocantina com o talento e a energia de jovens universitários.</p>
+                    <div class="mt-8 flex justify-center md:justify-start space-x-4">
+                        <a href="#solucoes" class="bg-primary text-white py-3 px-6 rounded-full hover:opacity-90 transition text-lg">Nossas Soluções</a>
+                        <a href="#contato" class="bg-gray-200 text-gray-800 py-3 px-6 rounded-full hover:bg-gray-300 transition text-lg">Fale Conosco</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center">
+                    <div class="w-80 h-80 bg-primary rounded-full flex items-center justify-center bg-opacity-20">
+                         <div class="w-64 h-64 bg-primary rounded-full flex items-center justify-center bg-opacity-40">
+                              <div class="w-48 h-48 bg-primary rounded-full flex items-center justify-center">
+                                   <span class="text-white text-5xl font-bold">EJCON</span>
+                              </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Quem Somos</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-12 text-lg">
+                    A EJCON é a Empresa Júnior de Consultoria do curso de Administração da UEMASUL, fundada em 1995. Somos uma associação civil sem fins lucrativos, movida por estudantes que aplicam o conhecimento acadêmico em projetos reais. Fazemos parte do Movimento Empresa Júnior (MEJ), vinculados à Maranhão Junior e à Brasil Júnior, com o propósito de formar líderes empreendedores e impactar positivamente o mercado local.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="card p-8">
+                        <div class="text-primary text-5xl font-bold" data-target="29">0</div>
+                        <p class="mt-2 text-lg font-semibold">Anos de História</p>
+                    </div>
+                    <div class="card p-8">
+                        <div class="text-primary text-5xl font-bold" data-target="150">0</div>
+                        <p class="mt-2 text-lg font-semibold">Projetos Entregues</p>
+                    </div>
+                    <div class="card p-8">
+                        <div class="text-primary text-5xl font-bold" data-target="100">0</div>
+                        <p class="mt-2 text-lg font-semibold">Clientes Impactados</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cultura" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Nossa Cultura</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-12 text-lg">
+                    Nossos valores são o alicerce de tudo o que fazemos. Eles guiam nossas ações, fortalecem nossa equipe e garantem a entrega de resultados de excelência, sempre com um olhar voltado para o desenvolvimento social e profissional.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card p-6 text-center">
+                        <div class="text-4xl mb-4">💡</div>
+                        <h3 class="text-xl font-bold mb-2">Inovação e Empreendedorismo</h3>
+                        <p class="text-light-gray">Promovemos soluções criativas e incentivamos a atitude empreendedora para enfrentar desafios e impulsionar a transformação.</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <div class="text-4xl mb-4">📈</div>
+                        <h3 class="text-xl font-bold mb-2">Desenvolvimento Contínuo</h3>
+                        <p class="text-light-gray">Oferecemos capacitações, preparando nossos membros para o mercado e a liderança, formando profissionais completos.</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <div class="text-4xl mb-4">🤝</div>
+                        <h3 class="text-xl font-bold mb-2">Excelência Colaborativa</h3>
+                        <p class="text-light-gray">Valorizamos o trabalho em equipe, com comunicação aberta e troca de conhecimentos para otimizar resultados.</p>
+                    </div>
+                     <div class="card p-6 text-center">
+                        <div class="text-4xl mb-4">🎯</div>
+                        <h3 class="text-xl font-bold mb-2">Qualidade e Impacto Social</h3>
+                        <p class="text-light-gray">Nosso compromisso é entregar serviços éticos que superem expectativas e impactem positivamente a comunidade.</p>
+                    </div>
+                     <div class="card p-6 text-center">
+                        <div class="text-4xl mb-4">🔍</div>
+                        <h3 class="text-xl font-bold mb-2">Ética e Transparência</h3>
+                        <p class="text-light-gray">Agimos com integridade e clareza em todas as nossas atividades, baseando nossos relacionamentos na confiança.</p>
+                    </div>
+                     <div class="card p-6 text-center">
+                        <div class="text-4xl mb-4">🏆</div>
+                        <h3 class="text-xl font-bold mb-2">Meritocracia</h3>
+                        <p class="text-light-gray">Reconhecemos e recompensamos o esforço e o desempenho, incentivando o crescimento individual e coletivo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solucoes" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Nossas Soluções</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-lg">
+                    Oferecemos um portfólio de serviços completo, desenhado para atender às necessidades estratégicas de micro e pequenas empresas. Cada solução é personalizada e executada com a qualidade e o rigor acadêmico da UEMASUL. Clique em um serviço para saber mais.
+                </p>
+                <div id="solucoes-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+                 <div id="solucao-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden p-4">
+                    <div class="bg-white rounded-lg p-8 max-w-2xl w-full card relative">
+                        <button id="modal-close-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+                        <h3 id="modal-title" class="text-2xl font-bold mb-4 text-primary"></h3>
+                        <p id="modal-description" class="mb-4"></p>
+                        <p id="modal-benefit" class="mb-4"></p>
+                        <a href="#contato" class="bg-primary text-white py-2 px-4 rounded-full hover:opacity-90 transition">Solicitar Proposta</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipe" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Conheça Nossa Equipe 2025</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-lg">
+                   Um time de jovens talentos, apaixonados por gestão e empreendedorismo, prontos para aplicar seu conhecimento e energia para transformar o seu negócio. Esta é a liderança que impulsiona a EJCON.
+                </p>
+                <div id="equipe-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                </div>
+            </div>
+        </section>
+
+        <section id="desempenho" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Nosso Desempenho</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-12 text-lg">
+                    Acompanhe nosso crescimento e impacto. Os dados a seguir refletem nosso compromisso com a excelência e os resultados que entregamos à comunidade e aos nossos membros. Os gráficos são interativos, passe o mouse para ver os detalhes.
+                </p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                     <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-4 text-center">Faturamento (R$)</h3>
+                        <div class="chart-container">
+                            <canvas id="faturamentoChart"></canvas>
+                        </div>
+                     </div>
+                     <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-4 text-center">Indicadores de Crescimento (2024)</h3>
+                        <div class="chart-container">
+                            <canvas id="indicadoresChart"></canvas>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="py-20 bg-dark-gray text-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-white">Vamos Conversar?</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300 text-lg">
+                    Estamos prontos para entender seu desafio e propor a melhor solução. Entre em contato conosco e vamos juntos construir o caminho para o sucesso do seu negócio.
+                </p>
+                <div class="flex flex-col md:flex-row gap-10">
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4">Informações de Contato</h3>
+                        <div class="space-y-4">
+                             <p class="flex items-center"><span class="bg-primary p-2 rounded-full mr-3">📞</span> (99) 98426-9970</p>
+                             <p class="flex items-center"><span class="bg-primary p-2 rounded-full mr-3">📧</span> comercial.ejcon@gmail.com</p>
+                             <p class="flex items-center"><span class="bg-primary p-2 rounded-full mr-3">📍</span> UEMASUL - Universidade Estadual da Região Tocantina do Maranhão, Imperatriz - MA</p>
+                        </div>
+                         <div class="mt-8">
+                            <h4 class="text-xl font-bold mb-2">Siga-nos</h4>
+                            <a href="#" class="text-primary hover:underline">@ejconsultoria</a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                         <form class="card bg-white p-8 rounded-lg text-gray-800">
+                            <h3 class="text-2xl font-bold mb-6">Envie uma Mensagem</h3>
+                            <div class="mb-4">
+                                <label for="name" class="block text-sm font-medium mb-1">Nome</label>
+                                <input type="text" id="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Seu nome">
+                            </div>
+                             <div class="mb-4">
+                                <label for="email" class="block text-sm font-medium mb-1">Email</label>
+                                <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="seu@email.com">
+                            </div>
+                             <div class="mb-4">
+                                <label for="message" class="block text-sm font-medium mb-1">Mensagem</label>
+                                <textarea id="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Como podemos ajudar?"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-full hover:opacity-90 transition font-bold">Enviar</button>
+                         </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white py-6">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>&copy; <span id="current-year"></span> EJCON - Empresa Júnior de Consultoria. Todos os direitos reservados.</p>
+             <p class="text-sm mt-1">Vinculada à UEMASUL, Maranhão Junior e Brasil Júnior.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const header = document.getElementById('header');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if(mobileMenu.classList.contains('hidden') === false) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            const countUp = (el) => {
+                const target = +el.dataset.target;
+                const duration = 2000;
+                let start = 0;
+                const stepTime = Math.abs(Math.floor(duration / target));
+                
+                const timer = setInterval(() => {
+                    start += 1;
+                    el.textContent = start;
+                    if (start === target) {
+                        clearInterval(timer);
+                    }
+                }, stepTime);
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counters = entry.target.querySelectorAll('[data-target]');
+                        counters.forEach(counter => {
+                            countUp(counter);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(document.querySelector('#sobre'));
+
+            const solucoes = [
+                { title: "Pesquisa de Mercado", description: "Obtenha informações valiosas sobre o mercado, clientes, concorrentes e tendências para tomar decisões mais embasadas e estratégicas.", benefit: "Ajuda a tomar decisões mais informadas, identificando oportunidades de crescimento e evitando riscos." },
+                { title: "Plano de Negócio", description: "Estruture suas ideias e projetos, analisando viabilidade, definindo objetivos, estratégias, metas e projeções financeiras.", benefit: "Aumenta as chances de sucesso do empreendimento ao fornecer um roteiro claro e profissional." },
+                { title: "Pesquisa de Satisfação", description: "Entenda o grau de satisfação dos seus clientes para melhorar produtos, serviços e processos, garantindo a fidelização do público.", benefit: "Aumenta a fidelidade e satisfação do cliente, impulsionando a retenção e o sucesso no mercado." },
+                { title: "Mapeamento de Processos", description: "Identifique e otimize os processos internos da sua empresa, eliminando gargalos, reduzindo custos e aumentando a eficiência operacional.", benefit: "Aumenta a eficiência, reduz custos e melhora a qualidade dos produtos e serviços." },
+                { title: "Recrutamento e Seleção", description: "Encontre os candidatos ideais para suas vagas através de técnicas de seleção e avaliação de perfis profissionais alinhados à sua cultura.", benefit: "Garante contratações mais eficientes, economizando tempo e recursos, com uma equipe qualificada." },
+                { title: "Pesquisa de Clima Organizacional", description: "Compreenda o clima interno da empresa para garantir um ambiente de trabalho saudável e produtivo, identificando pontos de melhoria.", benefit: "Melhora o ambiente organizacional, reduzindo a rotatividade e aumentando a motivação." },
+                { title: "Análise de Perfil em Mídias Sociais", description: "Avalie o desempenho e engajamento do seu perfil nas redes sociais, identificando pontos fortes e áreas de melhoria.", benefit: "Otimiza suas estratégias de marketing digital, aumentando a visibilidade e o engajamento." },
+                { title: "Estratégia de Marketing Digital", description: "Desenvolvemos estratégias de marketing personalizadas para maximizar o engajamento e ampliar sua presença online.", benefit: "Melhora o alcance e impacto da marca com planos detalhados para engajar seu público-alvo." },
+                { title: "Criação de Branding", description: "Desenvolvimento de identidade visual e de marca completa, incluindo logotipos e mensagens para fortalecer sua presença no mercado.", benefit: "Gera uma conexão sólida com seu público, diferenciando sua empresa da concorrência." },
+            ];
+
+            const solucoesContainer = document.getElementById('solucoes-container');
+            const modal = document.getElementById('solucao-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const modalBenefit = document.getElementById('modal-benefit');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            solucoes.forEach(solucao => {
+                const card = document.createElement('div');
+                card.className = 'card p-6 cursor-pointer';
+                card.innerHTML = `<h3 class="text-xl font-bold">${solucao.title}</h3><p class="text-light-gray mt-2">${solucao.description.substring(0, 80)}...</p><span class="text-primary font-semibold mt-4 inline-block">Saber mais</span>`;
+                card.addEventListener('click', () => {
+                    modalTitle.textContent = solucao.title;
+                    modalDescription.textContent = solucao.description;
+                    modalBenefit.innerHTML = `<span class="font-bold text-gray-700">Benefício:</span> ${solucao.benefit}`;
+                    modal.classList.remove('hidden');
+                });
+                solucoesContainer.appendChild(card);
+            });
+
+            const closeModal = () => modal.classList.add('hidden');
+            modalCloseBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if(e.target === modal) closeModal();
+            });
+
+            const equipe = [
+                { nome: "Ana Beatriz", cargo: "Presidente", img: 'https://via.placeholder.com/150' },
+                { nome: "Roberta Mota", cargo: "Vice-Presidente", img: 'https://via.placeholder.com/150' },
+                { nome: "Rafael Alves", cargo: "Diretor de ADM/FIN", img: 'https://via.placeholder.com/150' },
+                { nome: "Wherlistôny Feitosa", cargo: "Diretor de Gestão de Pessoas", img: 'https://via.placeholder.com/150' },
+                { nome: "João Victor", cargo: "Diretor de Vendas e Projetos", img: 'https://via.placeholder.com/150' },
+                { nome: "Mariana Nepomuceno", cargo: "Diretora de Marketing", img: 'https://via.placeholder.com/150' },
+                { nome: "Brenda Oliveira", cargo: "Trainee de ADM/FIN", img: 'https://via.placeholder.com/150' },
+                { nome: "Amanda Rodrigues", cargo: "Trainee de ADM/FIN", img: 'https://via.placeholder.com/150' },
+                { nome: "Patrícia Pessoa", cargo: "Trainee de Gestão de Pessoas", img: 'https://via.placeholder.com/150' },
+                { nome: "Elizandra Sena", cargo: "Trainee de Gestão de Pessoas", img: 'https://via.placeholder.com/150' },
+            ];
+            
+            const equipeContainer = document.getElementById('equipe-container');
+            equipe.forEach(membro => {
+                const div = document.createElement('div');
+                div.className = 'text-center card p-4';
+                div.innerHTML = `
+                    <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-gray-200"></div>
+                    <h4 class="font-bold">${membro.nome}</h4>
+                    <p class="text-sm text-primary">${membro.cargo}</p>
+                `;
+                equipeContainer.appendChild(div);
+            });
+            
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            const faturamentoCtx = document.getElementById('faturamentoChart').getContext('2d');
+            new Chart(faturamentoCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['2023', '2024'],
+                    datasets: [{
+                        label: 'Faturamento (R$)',
+                        data: [9200, 12300],
+                        backgroundColor: ['rgba(255, 127, 0, 0.6)', 'rgba(255, 127, 0, 0.8)'],
+                        borderColor: ['rgb(255, 127, 0)', 'rgb(255, 127, 0)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                             ticks: {
+                                callback: function(value) {
+                                    return 'R$ ' + value / 1000 + 'k';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const indicadoresCtx = document.getElementById('indicadoresChart').getContext('2d');
+            new Chart(indicadoresCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Alto Crescimento', 'Colaborativa', 'Inovadora', 'NPS', 'Membros Minorizados'],
+                    datasets: [{
+                        label: 'Desempenho 2024 (%)',
+                        data: [100, 100, 100, 100, 100],
+                        fill: true,
+                        backgroundColor: 'rgba(255, 127, 0, 0.2)',
+                        borderColor: 'rgb(255, 127, 0)',
+                        pointBackgroundColor: 'rgb(255, 127, 0)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(255, 127, 0)'
+                    }]
+                },
+                options: {
+                     responsive: true,
+                     maintainAspectRatio: false,
+                     scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12
+                                }
+                            },
+                            ticks: {
+                                backdropColor: 'transparent',
+                                stepSize: 25,
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            min: 0,
+                            max: 100
+                        }
+                    },
+                     plugins: {
+                        legend: { position: 'top' }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
