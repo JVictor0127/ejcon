@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EJCON</title>
+    <title>EJCON - Empresa Júnior de Consultoria</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon" type="image/x-icon" href="https://github.com/JVictor0127/ejcon/blob/main/EJMIDIA/ejlogo_02.png?raw=true">
@@ -104,6 +104,106 @@
         }
         .error-message.show {
             display: block;
+        }
+
+        /* Estilos para o banner de cookies */
+        #cookie-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333333; /* Dark gray */
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            text-align: center;
+            transform: translateY(100%); /* Start hidden below the screen */
+            transition: transform 0.5s ease-out;
+        }
+        #cookie-consent-banner.show {
+            transform: translateY(0); /* Slide up into view */
+        }
+        @media (min-width: 768px) {
+            #cookie-consent-banner {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 1rem 2rem;
+            }
+        }
+
+        /* Estilos para o modal de políticas */
+        #legal-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1010; /* Acima do banner de cookies */
+            display: none;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto; /* Permite scroll se o conteúdo for longo */
+            padding: 1rem;
+        }
+        #legal-modal-overlay.show {
+            display: flex;
+        }
+        #legal-modal {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            z-index: 1020;
+            max-width: 800px;
+            width: 100%;
+            padding: 2rem;
+            position: relative;
+            max-height: 90vh; /* Limita a altura do modal */
+            overflow-y: auto; /* Adiciona scroll interno ao modal */
+        }
+        #legal-modal .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #888;
+            transition: color 0.2s;
+        }
+        #legal-modal .modal-close-btn:hover {
+            color: #4a4a4a;
+        }
+        #legal-modal h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #FF7F00; /* Cor primária */
+        }
+        #legal-modal h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #4a4a4a;
+        }
+        #legal-modal p, #legal-modal ul {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: #666;
+        }
+        #legal-modal ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+        }
+        #legal-modal li {
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
@@ -329,21 +429,53 @@
                 </div>
             </div>
         </section>
+        
     </main>
 
     <footer class="bg-white py-6">
         <div class="container mx-auto px-6 text-center text-gray-600">
             <p>&copy; <span id="current-year"></span> EJCON - Empresa Júnior de Consultoria. Todos os direitos reservados.</p>
-                <p class="text-sm mt-1">Vinculada à UEMASUL, Maranhão Junior e Brasil Júnior.</p>
+            <p class="text-sm mt-1">Vinculada à UEMASUL, Maranhão Junior e Brasil Júnior.</p>
+            <div class="mt-4 text-sm space-x-4">
+                <a href="#" id="politica-privacidade-link" class="text-gray-600 hover:text-primary transition">Política de Privacidade</a>
+                <span class="text-gray-400">|</span>
+                <a href="#" id="termos-de-uso-link" class="text-gray-600 hover:text-primary transition">Termos de Uso</a>
+            </div>
         </div>
     </footer>
 
-    <!-- Modal de Mensagem Personalizado -->
+    <!-- Modal de Mensagem Personalizado (para formulário) -->
     <div id="message-modal-overlay" class="message-modal-overlay"></div>
     <div id="message-modal" class="message-modal">
         <h3 id="modal-message-title" class="text-xl font-bold mb-4"></h3>
         <p id="modal-message-content" class="mb-6"></p>
         <button id="modal-message-close-btn" class="bg-primary text-white py-2 px-4 rounded-full hover:opacity-90 transition">Fechar</button>
+    </div>
+
+    <!-- Banner de Consentimento de Cookies -->
+    <div id="cookie-consent-banner" class="hidden">
+        <p class="flex-grow text-sm md:text-base mb-4 md:mb-0">
+            Utilizamos cookies para melhorar sua experiência de navegação, analisar o tráfego do site e personalizar o conteúdo. Ao continuar a usar nosso site, você concorda com nossa <a href="#" id="cookie-privacy-link" class="text-primary hover:underline font-semibold">Política de Privacidade</a>, que inclui nossa política de cookies.
+        </p>
+        <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+            <button id="accept-cookies-btn" class="bg-primary text-white py-2 px-6 rounded-full hover:opacity-90 transition font-bold w-full">
+                Aceitar Todos
+            </button>
+            <button id="reject-cookies-btn" class="bg-gray-500 text-white py-2 px-6 rounded-full hover:bg-gray-600 transition font-bold w-full">
+                Recusar
+            </button>
+        </div>
+    </div>
+
+    <!-- Novo Modal para Política de Privacidade e Termos de Uso -->
+    <div id="legal-modal-overlay" class="hidden">
+        <div id="legal-modal">
+            <button class="modal-close-btn">&times;</button>
+            <h2 id="legal-modal-title"></h2>
+            <div id="legal-modal-content" class="prose max-w-none">
+                <!-- Conteúdo será injetado aqui pelo JavaScript -->
+            </div>
+        </div>
     </div>
 
     <script>
@@ -362,13 +494,17 @@
             
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    if(mobileMenu.classList.contains('hidden') === false) {
-                        mobileMenu.classList.add('hidden');
+                    // Previne o comportamento padrão apenas para links que não são os de política/termos
+                    // Os links de política/termos serão tratados separadamente para abrir o modal
+                    if (this.id !== 'politica-privacidade-link' && this.id !== 'termos-de-uso-link' && this.id !== 'cookie-privacy-link') {
+                        e.preventDefault();
+                        if(mobileMenu.classList.contains('hidden') === false) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({
+                            behavior: 'smooth'
+                        });
                     }
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
                 });
             });
 
@@ -440,7 +576,7 @@
             });
 
             const equipe = [
-                { nome: "Ana Beatriz", cargo: "Presidente", img: 'https://placehold.co/150x150/FF7F00/FFFFFF?text=AB' },
+            { nome: "Ana Beatriz", cargo: "Presidente", img: 'https://placehold.co/150x150/FF7F00/FFFFFF?text=AB' },
                 { nome: "Roberta Mota", cargo: "Vice-Presidente", img: 'https://placehold.co/150x150/FF7F00/FFFFFF?text=RM' },
                 { nome: "Rafael Alves", cargo: "Diretor de ADM/FIN", img: 'https://drive.google.com/file/d/1VuVXVhIUvdBkVAld_JicyvVTZsYXu3aO/view?usp=sharing' },
                 { nome: "Wherlistôny Feitosa", cargo: "Diretor de Gestão de Pessoas", img: 'https://placehold.co/150x150/FF7F00/FFFFFF?text=WF' },
@@ -522,7 +658,7 @@
                     labels: ['Alto Crescimento', 'Colaborativa', 'Inovadora', 'NPS', 'Membros Minorizados'],
                     datasets: [{
                         label: 'Desempenho 2024 (%)',
-                        data: [100, 100, 100, 100, 100], // Dados de exemplo, você pode ajustar.
+                        data: [100, 100, 100, 100, 100], // Dados de exemplo, você pode ajustar
                         fill: true,
                         backgroundColor: 'rgba(255, 127, 0, 0.2)',
                         borderColor: 'rgb(255, 127, 0)',
@@ -680,6 +816,183 @@
                 } finally {
                     submitButton.disabled = false;
                     submitButton.textContent = 'Enviar';
+                }
+            });
+
+            // --- Lógica do Banner de Cookies ---
+            const cookieBanner = document.getElementById('cookie-consent-banner');
+            const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
+            const rejectCookiesBtn = document.getElementById('reject-cookies-btn'); // Novo botão
+            const COOKIE_NAME = 'ejcon_cookie_consent';
+
+            // Função para definir um cookie
+            const setCookie = (name, value, days) => {
+                let expires = "";
+                if (days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+            }
+
+            // Função para obter um cookie
+            const getCookie = (name) => {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for(let i=0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            // Verifica se o consentimento já foi dado
+            const consentStatus = getCookie(COOKIE_NAME);
+            if (!consentStatus) { // Se não houver cookie, exibe o banner
+                setTimeout(() => {
+                    cookieBanner.classList.remove('hidden');
+                    cookieBanner.classList.add('show');
+                }, 500); // Pequeno atraso para a animação de slide-up
+            }
+
+            // Event listener para o botão "Aceitar Todos"
+            acceptCookiesBtn.addEventListener('click', () => {
+                setCookie(COOKIE_NAME, 'accepted', 365); // Define o cookie por 365 dias
+                cookieBanner.classList.remove('show');
+                // Opcional: Adicionar um atraso para a animação de slide-down antes de esconder completamente
+                setTimeout(() => {
+                    cookieBanner.classList.add('hidden');
+                }, 500); 
+            });
+
+            // Event listener para o botão "Recusar"
+            rejectCookiesBtn.addEventListener('click', () => {
+                setCookie(COOKIE_NAME, 'rejected', 365); // Define o cookie como 'rejeitado' por 365 dias
+                cookieBanner.classList.remove('show');
+                setTimeout(() => {
+                    cookieBanner.classList.add('hidden');
+                }, 500); 
+                // Aqui você pode adicionar lógica para desativar cookies não essenciais, se houver.
+                // Por exemplo, se você usa Google Analytics, desativaria-o aqui.
+                console.log('Cookies recusados. Desativando funcionalidades que dependem de cookies não essenciais.');
+            });
+
+            // --- Lógica do Modal de Políticas ---
+            const legalModalOverlay = document.getElementById('legal-modal-overlay');
+            const legalModal = document.getElementById('legal-modal');
+            const legalModalTitle = document.getElementById('legal-modal-title');
+            const legalModalContent = document.getElementById('legal-modal-content');
+            const legalModalCloseBtn = legalModal.querySelector('.modal-close-btn');
+
+            // Conteúdo da Política de Privacidade (extraído da seção anterior)
+            const politicaPrivacidadeContent = `
+                <p><strong>Última atualização:</strong> 27 de Julho de 2025</p>
+                <p>A sua privacidade é importante para nós. É política da EJCON respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site EJCON, e outros sites que possuímos e operamos.</p>
+
+                <h3>1. Informações que Coletamos</h3>
+                <p>Solicitamos informações pessoais apenas quando realmente precisamos delas para lhe fornecer um serviço. Fazemo-lo por meios justos e legais, com o seu conhecimento e consentimento. Também informamos por que estamos coletando e como será usado.</p>
+                <ul>
+                    <li><strong>Dados de Contato:</strong> Nome, e-mail, telefone, mensagem (enviados via formulário de contato).</li>
+                    <li><strong>Dados de Navegação:</strong> Informações sobre como você usa nosso site, como páginas visitadas, tempo de permanência, etc. (coletados via cookies e ferramentas de análise).</li>
+                </ul>
+
+                <h3>2. Uso das Informações</h3>
+                <p>Usamos as informações coletadas para:</p>
+                <ul>
+                    <li>Responder às suas solicitações de contato.</li>
+                    <li>Melhorar a experiência do usuário em nosso site.</li>
+                    <li>Analisar o desempenho do site e o comportamento do usuário.</li>
+                    <li>Cumprir obrigações legais.</li>
+                </ul>
+
+                <h3>3. Compartilhamento de Informações</h3>
+                <p>Não compartilhamos informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
+
+                <h3>4. Segurança dos Dados</h3>
+                <p>Protegemos as informações coletadas dentro de meios comercialmente aceitáveis para evitar perdas e roubos, bem como acesso, divulgação, cópia, uso ou modificação não autorizados.</p>
+
+                <h3>5. Seus Direitos</h3>
+                <p>Você é livre para recusar a nossa solicitação de informações pessoais, entendendo que talvez não possamos fornecer alguns dos serviços desejados.</p>
+                <p>Para exercer seus direitos de acesso, retificação, exclusão ou oposição ao tratamento de seus dados, entre em contato conosco através do e-mail: <a href="mailto:comercial.ejcon@gmail.com" class="text-primary hover:underline">comercial.ejcon@gmail.com</a>.</p>
+
+                <h3>6. Política de Cookies</h3>
+                <p>Nosso site utiliza cookies para melhorar a sua experiência de navegação, personalizar conteúdo e anúncios, e analisar nosso tráfego. Ao continuar a usar nosso site, você concorda com o uso de cookies de acordo com esta política.</p>
+                <p><strong>O que são cookies?</strong> Cookies são pequenos arquivos de texto armazenados no seu dispositivo quando você visita um site. Eles são amplamente utilizados para fazer com que os sites funcionem, ou funcionem de forma mais eficiente, bem como para fornecer informações aos proprietários do site.</p>
+                <p><strong>Como usamos cookies:</strong> Utilizamos cookies para lembrar suas preferências, entender como você interage com nosso site e para fins de análise.</p>
+                <p><strong>Tipos de cookies que usamos:</strong></p>
+                <ul>
+                    <li><strong>Cookies Essenciais:</strong> Necessários para o funcionamento básico do site.</li>
+                    <li><strong>Cookies de Desempenho:</strong> Coletam informações sobre como os visitantes usam o site (ex: quais páginas são mais visitadas).</li>
+                    <li><strong>Cookies de Funcionalidade:</strong> Permitem que o site se lembre das suas escolhas (ex: idioma).</li>
+                    <li><strong>Cookies de Publicidade:</strong> Usados para exibir anúncios mais relevantes para você.</li>
+                </ul>
+                <p>Você pode controlar e/ou excluir cookies como desejar. Para mais detalhes, consulte aboutcookies.org.</p>
+
+                <h3>7. Alterações a Esta Política</h3>
+                <p>Podemos atualizar nossa Política de Privacidade periodicamente. A versão mais recente estará sempre disponível nesta página.</p>
+            `;
+
+            // Conteúdo dos Termos de Uso (extraído da seção anterior)
+            const termosDeUsoContent = `
+                <p><strong>Última atualização:</strong> 27 de Julho de 2025</p>
+                <p>Bem-vindo ao site da EJCON. Ao acessar e usar este site, você concorda em cumprir e estar vinculado aos seguintes termos e condições de uso. Se você não concordar com qualquer parte destes termos e condições, por favor, não utilize nosso site.</p>
+
+                <h3>1. Uso do Site</h3>
+                <p>O conteúdo das páginas deste site é para sua informação geral e uso apenas. Ele está sujeito a alterações sem aviso prévio.</p>
+                <p>Nem nós nem terceiros fornecemos qualquer garantia ou garantia quanto à precisão, pontualidade, desempenho, integridade ou adequação das informações e materiais encontrados ou oferecidos neste site para qualquer finalidade específica. Você reconhece que tais informações e materiais podem conter imprecisões ou erros e nós expressamente excluímos a responsabilidade por quaisquer imprecisões ou erros na extensão máxima permitida por lei.</p>
+
+                <h3>2. Propriedade Intelectual</h3>
+                <p>Este site contém material que nos pertence ou é licenciado para nós. Este material inclui, mas não se limita a, design, layout, aparência, gráficos e texto. A reprodução é proibida, exceto de acordo com o aviso de direitos autorais, que faz parte destes termos e condições.</p>
+                <p>Todas as marcas registradas reproduzidas neste site, que não são propriedade ou licenciadas para o operador, são reconhecidas no site.</p>
+
+                <h3>3. Links para Outros Sites</h3>
+                <p>De tempos em tempos, este site também pode incluir links para outros sites. Esses links são fornecidos para sua conveniência para fornecer informações adicionais. Eles não significam que endossamos os sites. Não temos responsabilidade pelo conteúdo dos sites vinculados.</p>
+
+                <h3>4. Limitação de Responsabilidade</h3>
+                <p>Em nenhuma circunstância a EJCON será responsável por quaisquer danos diretos, indiretos, incidentais, consequenciais ou punitivos decorrentes do seu acesso, uso ou incapacidade de usar o site ou quaisquer materiais nele contidos.</p>
+
+                <h3>5. Alterações nos Termos de Uso</h3>
+                <p>A EJCON pode revisar estes termos de uso a qualquer momento, atualizando esta publicação. Ao usar este site, você concorda em ficar vinculado a tais revisões e, portanto, deve visitar periodicamente esta página para determinar os termos de uso atuais aos quais você está vinculado.</p>
+            `;
+
+            // Função para exibir o modal de políticas
+            const showLegalModal = (title, content) => {
+                legalModalTitle.textContent = title;
+                legalModalContent.innerHTML = content; // Usar innerHTML para renderizar tags HTML
+                legalModalOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Evita o scroll da página principal
+            };
+
+            // Função para esconder o modal de políticas
+            const hideLegalModal = () => {
+                legalModalOverlay.classList.remove('show');
+                document.body.style.overflow = ''; // Restaura o scroll da página principal
+            };
+
+            // Event listeners para os links no rodapé e no banner de cookies
+            document.getElementById('politica-privacidade-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                showLegalModal('Política de Privacidade', politicaPrivacidadeContent);
+            });
+
+            document.getElementById('termos-de-uso-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                showLegalModal('Termos de Uso', termosDeUsoContent);
+            });
+
+            document.getElementById('cookie-privacy-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                hideLegalModal(); // Fecha o banner de cookies se estiver aberto
+                showLegalModal('Política de Privacidade', politicaPrivacidadeContent);
+            });
+
+            // Event listeners para fechar o modal
+            legalModalCloseBtn.addEventListener('click', hideLegalModal);
+            legalModalOverlay.addEventListener('click', (e) => {
+                if (e.target === legalModalOverlay) {
+                    hideLegalModal();
                 }
             });
         });
