@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJCON - Empresa Júnior</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-[#f8f7f3] font-[Poppins]">
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <div id="modal-mensagem" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-[100] p-4">
+        <div class="bg-white rounded-xl p-8 max-w-sm w-full shadow-2xl text-center">
+            <h3 id="modal-mensagem-titulo" class="text-2xl font-bold mb-4"></h3>
+            <p id="modal-mensagem-texto" class="mb-8 text-gray-600 text-lg leading-relaxed"></p>
+            <button onclick="fecharModalMensagem()" class="bg-[#FF7F00] text-white py-2 px-8 rounded-full font-bold">Fechar</button>
+        </div>
+    </div>
+
+    <div id="cookie-consent-banner" class="fixed bottom-0 left-0 w-full bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-[90] p-4 hidden border-t border-gray-200">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-gray-700">
+            <p class="flex-grow text-sm md:text-base mb-4 md:mb-0">
+                Utilizamos cookies para melhorar sua experiência de navegação, analisar o tráfego do site e personalizar o conteúdo. Ao continuar a usar nosso site, você concorda com nossa <button onclick="abrirModalPrivacidade()" class="text-[#FF7F00] hover:underline font-semibold bg-transparent border-none cursor-pointer p-0">Política de Privacidade</button>, que inclui nossa política de cookies.
+            </p>
+            <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto shrink-0">
+                <button id="accept-cookies-btn" class="bg-[#FF7F00] text-white py-2 px-6 rounded-full hover:opacity-90 transition font-bold w-full md:w-auto whitespace-nowrap">
+                    Aceitar Todos
+                </button>
+                <button id="reject-cookies-btn" class="bg-gray-500 text-white py-2 px-6 rounded-full hover:bg-gray-600 transition font-bold w-full md:w-auto whitespace-nowrap">
+                    Recusar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-privacidade" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-[100] p-4 transition-opacity">
+        <div class="bg-white rounded-xl p-8 max-w-3xl w-full shadow-2xl relative max-h-[90vh] flex flex-col">
+            <button onclick="fecharModalPrivacidade()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
+            
+            <h2 id="legal-modal-title" class="text-3xl font-bold mb-6 text-[#FF7F00] shrink-0">Política de Privacidade</h2>
+            
+            <div id="legal-modal-content" class="overflow-y-auto pr-4 text-gray-700 leading-relaxed text-sm">
+                <p class="mb-4"><strong>Última atualização:</strong> 27 de Julho de 2025</p>
+                <p class="mb-4">A sua privacidade é importante para nós. É política da EJCON respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site EJCON, e outros sites que possuímos e operamos.</p>
+
+                <h3 class="font-bold text-lg mt-6 mb-2">1. Informações que Coletamos</h3>
+                <p class="mb-2">Solicitamos informações pessoais apenas quando realmente precisamos delas para lhe fornecer um serviço. Fazemo-lo por meios justos e legais, com o seu conhecimento e consentimento. Também informamos por que estamos coletando e como será usado.</p>
+                <ul class="list-disc pl-5 mb-4">
+                    <li><strong>Dados de Contato:</strong> Nome, e-mail, telefone, mensagem (enviados via formulário de contato).</li>
+                    <li><strong>Dados de Navegação:</strong> Informações sobre como você usa nosso site, como páginas visitadas, tempo de permanência, etc. (coletados via cookies e ferramentas de análise).</li>
+                </ul>
+
+                <h3 class="font-bold text-lg mt-6 mb-2">2. Uso das Informações</h3>
+                <p class="mb-2">Usamos as informações coletadas para:</p>
+                <ul class="list-disc pl-5 mb-4">
+                    <li>Responder às suas solicitações de contato.</li>
+                    <li>Melhorar a experiência do usuário em nosso site.</li>
+                    <li>Analisar o desempenho do site e o comportamento do usuário.</li>
+                    <li>Cumprir obrigações legais.</li>
+                </ul>
+
+                <h3 class="font-bold text-lg mt-6 mb-2">3. Compartilhamento de Informações</h3>
+                <p class="mb-4">Não compartilhamos informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
+
+                <h3 class="font-bold text-lg mt-6 mb-2">4. Segurança dos Dados</h3>
+                <p class="mb-4">Protegemos as informações coletadas dentro de meios comercialmente aceitáveis para evitar perdas e roubos, bem como acesso, divulgação, cópia, uso ou modificação não autorizados.</p>
+
+                <h3 class="font-bold text-lg mt-6 mb-2">5. Seus Direitos</h3>
+                <p class="mb-2">Você é livre para recusar a nossa solicitação de informações pessoais, entendendo que talvez não possamos fornecer alguns dos serviços desejados.</p>
+                <p class="mb-4">Para exercer seus direitos de acesso, retificação, exclusão ou oposição ao tratamento de seus dados, entre em contato conosco através do e-mail: <a href="mailto:comercial.ejcon@gmail.com" class="text-[#FF7F00] hover:underline font-bold">comercial.ejcon@gmail.com</a>.</p>
+
+                <h3 class="font-bold text-lg mt-6 mb-2">6. Política de Cookies</h3>
+                <p class="mb-2">Nosso site utiliza cookies para melhorar a sua experiência de navegação, personalizar conteúdo e anúncios, e analisar nosso tráfego. Ao continuar a usar nosso site, você concorda com o uso de cookies de acordo com esta política.</p>
+                <p class="mb-2"><strong>O que são cookies?</strong> Cookies são pequenos arquivos de texto armazenados no seu dispositivo quando você visita um site. Eles são amplamente utilizados para fazer com que os sites funcionem, ou funcionem de forma mais eficiente, bem como para fornecer informações aos proprietários do site.</p>
+                <p class="mb-2"><strong>Como usamos cookies:</strong> Utilizamos cookies para lembrar suas preferências, entender como você interage com nosso site e para fins de análise.</p>
+                <p class="mb-2"><strong>Tipos de cookies que usamos:</strong></p>
+                <ul class="list-disc pl-5 mb-4">
+                    <li><strong>Cookies Essenciais:</strong> Necessários para o funcionamento básico do site.</li>
+                    <li><strong>Cookies de Desempenho:</strong> Coletam informações sobre como os visitantes usam o site (ex: quais páginas são mais visitadas).</li>
+                    <li><strong>Cookies de Funcionalidade:</strong> Permitem que o site se lembre das suas escolhas (ex: idioma).</li>
+                    <li><strong>Cookies de Publicidade:</strong> Usados para exibir anúncios mais relevantes para você.</li>
+                </ul>
+                <p class="mb-4">Você pode controlar e/ou excluir cookies como desejar. Para mais detalhes, consulte aboutcookies.org.</p>
+
+                <h3 class="font-bold text-lg mt-6 mb-2">7. Alterações a Esta Política</h3>
+                <p class="mb-8">Podemos atualizar nossa Política de Privacidade periodicamente. A versão mais recente estará sempre disponível nesta página.</p>
+            </div>
+            
+            <div class="mt-6 text-center shrink-0 border-t border-gray-200 pt-4">
+                 <button onclick="fecharModalPrivacidade()" class="bg-[#FF7F00] text-white py-2 px-8 rounded-full hover:opacity-90 transition font-bold text-lg inline-block">
+                    Entendi e Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}?v=2"></script>
+
+    <script>
+        // ==========================================
+        // 1. MENSAGENS DO DJANGO
+        // ==========================================
+        {% if messages %}
+            {% for message in messages %}
+                if (typeof exibirMensagemModal === 'function') {
+                    exibirMensagemModal("{{ message|escapejs }}", "{{ message.tags }}");
+                }
+            {% endfor %}
+        {% endif %}
+
+        // ==========================================
+        // 2. LÓGICA DA LGPD E PRIVACIDADE
+        // ==========================================
+        function abrirModalPrivacidade() {
+            const modal = document.getElementById('modal-privacidade');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function fecharModalPrivacidade() {
+            const modal = document.getElementById('modal-privacidade');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fechar clicando no fundo preto
+            const modalPriv = document.getElementById('modal-privacidade');
+            if (modalPriv) {
+                modalPriv.addEventListener('click', function(event) {
+                    if (event.target === this) fecharModalPrivacidade();
+                });
+            }
+
+            // Lógica da Barra
+            const banner = document.getElementById('cookie-consent-banner');
+            const btnAccept = document.getElementById('accept-cookies-btn');
+            const btnReject = document.getElementById('reject-cookies-btn');
+
+            if (banner && btnAccept && btnReject) {
+                const consentimento = localStorage.getItem('ejcon_cookie_consent');
+
+                if (!consentimento) {
+                    banner.classList.remove('hidden');
+                } else if (consentimento === 'aceito') {
+                    iniciarRastreamento();
+                }
+
+                btnAccept.addEventListener('click', function() {
+                    localStorage.setItem('ejcon_cookie_consent', 'aceito');
+                    banner.classList.add('hidden');
+                    iniciarRastreamento();
+                });
+
+                btnReject.addEventListener('click', function() {
+                    localStorage.setItem('ejcon_cookie_consent', 'recusado');
+                    banner.classList.add('hidden');
+                });
+            }
+        });
+
+        // ==========================================
+        // 3. MOTOR DE RASTREAMENTO (ENVIANDO DADOS AO FECHAR A ABA)
+        // ==========================================
+        let tempoInicio = 0;
+        
+        function iniciarRastreamento() {
+            tempoInicio = Date.now();
+            window.addEventListener('beforeunload', function() {
+                const tempoPermanencia = Math.floor((Date.now() - tempoInicio) / 1000);
+                if (tempoPermanencia > 0) {
+                    const dados = { 
+                        pagina: window.location.pathname, 
+                        tempo: tempoPermanencia 
+                    };
+                    navigator.sendBeacon('/api/rastrear/', new Blob([JSON.stringify(dados)], { type: 'application/json' }));
+                }
+            });
+        }
+        
+        // ==========================================
+        // 4. LÓGICA DO MODAL DE SOLUÇÕES
+        // ==========================================
+        function abrirModalSolucao(id) {
+            const titulo = document.getElementById(id + '-titulo').innerHTML;
+            const texto = document.getElementById(id + '-texto').innerHTML;
+
+            document.getElementById('modal-titulo-dinamico').innerHTML = titulo;
+            document.getElementById('modal-texto-dinamico').innerHTML = texto;
+
+            const modal = document.getElementById('modal-solucoes');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function fecharModalSolucao() {
+            const modal = document.getElementById('modal-solucoes');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Permite fechar o popup de soluções clicando no fundo escuro
+            const modalSolucao = document.getElementById('modal-solucoes');
+            if (modalSolucao) {
+                modalSolucao.addEventListener('click', function(event) {
+                    if (event.target === this) fecharModalSolucao();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

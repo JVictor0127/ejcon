@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJCON - Empresa Júnior de Consultoria</title>
+    <!-- Link para o Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link para o Chart.js (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Links para a fonte Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link para o seu arquivo CSS personalizado -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-secondary">
+
+    <header id="header" class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="text-2xl font-bold text-primary">EJCON</div>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#inicio" class="text-gray-600 hover:text-primary transition">Início</a>
+                <a href="#sobre" class="text-gray-600 hover:text-primary transition">Sobre</a>
+                <a href="#cultura" class="text-gray-600 hover:text-primary transition">Cultura</a>
+                <a href="#solucoes" class="text-gray-600 hover:text-primary transition">Soluções</a>
+                <a href="#equipe" class="text-gray-600 hover:text-primary transition">Equipe</a>
+                <a href="#desempenho" class="text-gray-600 hover:text-primary transition">Desempenho</a>
+            </div>
+            <a href="#contato" class="hidden md:block bg-primary text-white py-2 px-4 rounded-full hover:opacity-90 transition">Quero uma Proposta</a>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#inicio" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Início</a>
+            <a href="#sobre" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Sobre</a>
+            <a href="#cultura" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Cultura</a>
+            <a href="#solucoes" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Soluções</a>
+            <a href="#equipe" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Equipe</a>
+            <a href="#desempenho" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Desempenho</a>
+            <a href="#contato" class="block py-2 px-4 text-sm text-primary hover:bg-gray-100">Quero uma Proposta</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="bg-white">
+            <div class="container mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight">Transformando <span class="text-primary">Ideias</span> em Soluções Inovadoras</h1>
+                    <p class="mt-4 text-lg text-light-gray">Desde 1995, impulsionando o sucesso de micro e pequenas empresas na Região Tocantina com o talento e a energia de jovens universitários.</p>
+                    <div class="mt-8 flex justify-center md:justify-start space-x-4">
+                        <a href="#solucoes" class="bg-primary text-white py-3 px-6 rounded-full hover:opacity-90 transition text-lg">Nossas Soluções</a>
+                        <a href="#contato" class="bg-gray-200 text-gray-800 py-3 px-6 rounded-full hover:bg-gray-300 transition text-lg">Fale Conosco</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center">
+                    <div class="w-80 h-80 bg-primary rounded-full flex items-center justify-center bg-opacity-20">
+                           <div class="w-64 h-64 bg-primary rounded-full flex items-center justify-center bg-opacity-40">
+                                 <div class="w-48 h-48 bg-primary rounded-full flex items-center justify-center">
+                                        <span class="text-white text-5xl font-bold">EJCON</span>
+                                 </div>
+                           </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Quem Somos</h2>
+                   <p class="text-center max-w-3xl mx-auto mb-12 text-lg">
+                       A EJCON é a Empresa Júnior de Consultoria do curso de Administração da UEMASUL, fundada em 1995. Somos uma associação civil sem fins lucrativos, movida por estudantes que aplicam o conhecimento acadêmico em projetos reais. Fazemos parte do Movimento Empresa Júnior (MEJ), vinculados à Maranhão Junior e à Brasil Júnior, com o propósito de formar líderes empreendedores e impactar positivamente o mercado local.
+                   </p>
+                <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="card p-8 shadow-lg rounded-xl bg-white">
+                        <div class="text-[#FF7F00] text-5xl font-bold">{{ anos_historia }}</div>
+                        <p class="mt-2 text-lg font-semibold">Anos de História</p>
+                    </div>
+                    <div class="card p-8 shadow-lg rounded-xl bg-white">
+                        <div class="text-[#FF7F00] text-5xl font-bold">{{ projetos_entregues }}</div>
+                        <p class="mt-2 text-lg font-semibold">Projetos Entregues</p>
+                    </div>
+                    <div class="card p-8 shadow-lg rounded-xl bg-white">
+                        <div class="text-[#FF7F00] text-5xl font-bold">{{ clientes_impactados }}</div>
+                        <p class="mt-2 text-lg font-semibold">Clientes Impactados</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO CULTURA (Exibição Direta e Centralizada) -->
+        <section id="cultura" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Nossa Cultura</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-lg text-gray-600">
+                    Nossos valores são o alicerce de tudo o que fazemos. Eles guiam nossas ações, fortalecem nossa equipe e garantem a entrega de resultados de excelência, sempre com um olhar voltado para o desenvolvimento social e profissional.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for item in culturas %}
+                        <div class="card p-8 flex flex-col items-center text-center hover:shadow-lg transition">
+                            <div class="text-5xl mb-4">{{ item.icone }}</div>
+                            <h3 class="text-xl font-bold mb-4 text-gray-800">{{ item.titulo }}</h3>
+                            <p class="text-gray-600 leading-relaxed">{{ item.descricao|linebreaksbr }}</p>
+                        </div>
+                    {% empty %}
+                        <p class="text-center text-gray-500 w-full col-span-3">Nenhum valor cadastrado no momento.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO SOLUÇÕES -->
+        <section id="solucoes" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Nossas Soluções</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-lg">
+                    Oferecemos um portfólio de serviços completo, desenhado para atender às necessidades estratégicas de micro e pequenas empresas. Cada solução é personalizada e executada com a qualidade e o rigor acadêmico da UEMASUL. Clique em um serviço para saber mais.
+                </p>
+                <div class="container mx-auto px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {% for solucao in solucoes %}
+                            <div class="card p-6 bg-white rounded-xl shadow-md">
+                                <h3 class="text-xl font-bold">{{ solucao.titulo }}</h3>
+                                <p class="mt-2 text-gray-500">{{ solucao.descricao|striptags|truncatechars:100 }}</p>
+                                <button onclick="abrirModalSolucao('solucao-{{ solucao.id }}')" class="text-[#FF7F00] font-bold mt-4">Saber mais</button>
+                                
+                                <!-- Dados ocultos -->
+                                <div id="solucao-{{ solucao.id }}-titulo" class="hidden">{{ solucao.titulo }}</div>
+                                <div id="solucao-{{ solucao.id }}-texto" class="hidden">{{ solucao.descricao|safe }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO EQUIPE -->
+        <section id="equipe" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Conheça Nossa Equipe</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    {% for membro in equipe %}
+                        <div class="text-center card p-4 hover:shadow-lg transition">
+                            {% if membro.foto %}
+                                <img src="{{ membro.foto.url }}" alt="{{ membro.nome }}" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+                            {% else %}
+                                <div class="w-24 h-24 rounded-full bg-[#FF7F00] mx-auto mb-4 flex items-center justify-center text-white font-bold text-2xl">
+                                    {{ membro.nome|slice:":1" }}
+                                </div>
+                            {% endif %}
+                            <h4 class="font-bold">{{ membro.nome }}</h4>
+                            <div class="text-sm text-[#FF7F00]">{{ membro.funcao }}</div>
+                        </div>
+                    {% empty %}
+                        <p class="text-center text-gray-500 w-full col-span-5">Nenhum membro cadastrado.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO CONTATO (Formulário do Django) -->
+        <section id="contato" class="py-20 bg-dark-gray text-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-white">Vamos Conversar?</h2>
+                   <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300 text-lg">
+                       Estamos prontos para entender seu desafio e propor a melhor solução. Entre em contato conosco e vamos juntos construir o caminho para o sucesso do seu negócio.
+                   </p>
+                <div class="flex flex-col md:flex-row gap-10">
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4">Informações de Contato</h3>
+                        <div class="space-y-4">
+                               <p class="flex items-center"><span class="bg-primary p-2 rounded-full mr-3">📞</span> (99) 98426-9970</p>
+                               <p class="flex items-center"><span class="bg-primary p-2 rounded-full mr-3">📧</span> comercial.ejcon@gmail.com</p>
+                               <p class="flex items-center"><span class="bg-primary p-2 rounded-full mr-3">📍</span> UEMASUL - Universidade Estadual da Região Tocantina do Maranhão, Imperatriz - MA</p>
+                        </div>
+                           <div class="mt-8">
+                               <h4 class="text-xl font-bold mb-2">Siga-nos</h4>
+                               <a href="#" class="text-primary hover:underline">@ejconsultoria</a>
+                           </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <form method="POST" action="{% url 'index' %}" class="card bg-white p-8 rounded-lg text-gray-800">
+                            {% csrf_token %}
+                            <h3 class="text-2xl font-bold mb-6">Envie uma Mensagem</h3>
+                            
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Nome</label>
+                                {{ form.nome }}
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Email</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Contato (Opcional)</label>
+                                {{ form.contato }}
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Mensagem</label>
+                                {{ form.mensagem }}
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-[#FF7F00] text-white py-3 px-6 rounded-full hover:opacity-90 transition font-bold">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white py-6">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>&copy; <span id="current-year"></span> EJCON - Empresa Júnior de Consultoria. Todos os direitos reservados.</p>
+               <p class="text-sm mt-1">Vinculada à UEMASUL, Maranhão Junior e Brasil Júnior.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Mensagem Personalizado -->
+    <div id="message-modal-overlay" class="message-modal-overlay"></div>
+    <div id="message-modal" class="message-modal">
+        <h3 id="modal-message-title" class="text-xl font-bold mb-4"></h3>
+        <p id="modal-message-content" class="mb-6"></p>
+        <button id="modal-message-close-btn" class="bg-primary text-white py-2 px-4 rounded-full hover:opacity-90 transition">Fechar</button>
+    </div>
+
+    <!-- POPUP das soluções -->
+    <div id="modal-solucoes" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-[100] p-4 transition-opacity">
+        <div class="bg-white rounded-lg p-8 max-w-2xl w-full relative">
+            <button onclick="fecharModalSolucao()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
+            
+            <h3 id="modal-titulo-dinamico" class="text-3xl font-bold mb-4 text-[#FF7F00]"></h3>
+            <div id="modal-texto-dinamico" class="mb-8 text-gray-700 text-lg leading-relaxed"></div>
+            
+            <a href="#contato" onclick="fecharModalSolucao()" class="bg-[#FF7F00] text-white py-2 px-6 rounded-full hover:opacity-90 transition inline-block font-bold text-lg">
+                Quero uma Proposta
+            </a>
+        </div>
+    </div>
+
+    <!-- Link para o seu arquivo JavaScript personalizado -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
+{% endblock %}
