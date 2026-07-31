@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
+import dj_database_url
 from pathlib import Path
 from django.urls import reverse_lazy
 
@@ -127,6 +128,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -216,3 +218,23 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
+# --- CONFIGURAÇÃO DE PRODUÇÃO / RAILWAY ---
+
+# Permite qualquer host do Railway
+ALLOWED_HOSTS = ['*'] 
+
+# Resolve problemas de formulário e login no admin
+CSRF_TRUSTED_ORIGINS = ['https://*.up.railway.app', 'https://*.ejcon.com.br']
+
+# Configuração do Banco de Dados Dinâmica
+# Se existir a variável DATABASE_URL (no Railway), ele usa o PostgreSQL. 
+# Se não (no seu PC), ele continua usando o SQLite3.
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    }
+
+# Configuração do WhiteNoise para os estáticos do Unfold
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
